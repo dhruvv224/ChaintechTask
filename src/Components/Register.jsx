@@ -1,67 +1,58 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { setUserData } from '../Redux/Slices/UserSlice';
 import { useNavigate, Link } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import { setToken } from '../slices/authSlice';
-import { ToastContainer, toast } from 'react-toastify';
+import { FaEye, FaEyeSlash } from 'react-icons/fa';  // Import React Icons
+import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import '../css/RegistrationForm.css';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 
-const RegistrationForm = () => {
-  const dispatch = useDispatch();  // Redux dispatch to update the state
-  const token = useSelector(state => state.auth.token);  // Access token from Redux store
-  const navigate = useNavigate();  // Hook to navigate programmatically
-  const [passwordVisible, setPasswordVisible] = useState(false);  // State to manage password visibility
-  const [formData, setFormData] = useState({
+const Register = () => {
+  const [userData, setUserDataLocal] = useState({
     firstname: '',
     lastname: '',
-    phone: '',
     email: '',
-    password: ''
-  });  // State to manage form input values
+    bio: '',
+    phonenumber: '',
+    password: '',
+    confirmPass: '',
+  });
+  const [passwordVisible, setPasswordVisible] = useState(false);  // State to manage password visibility
   const [errors, setErrors] = useState({});  // State to manage form validation errors
-
-  // Redirect to home if user is already logged in
-  useEffect(() => {
-    if (token) {
-      navigate('/');
-    }
-  }, [token, navigate]);
-
-  // Handle input field changes
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value
-    });
-  };
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   // Validate form data
   const validate = () => {
     let tempErrors = {};
     let isValid = true;
 
-    // Check if required fields are filled
-    Object.keys(formData).forEach(field => {
-      if (!formData[field]) {
-        tempErrors[field] = 'This field is required';
-        isValid = false;
-      }
-    });
-
-    // Check if phone number is exactly 10 digits
-    if (formData.phone && !/^\d{10}$/.test(formData.phone)) {
-      tempErrors.phone = 'Phone number must be 10 digits';
+    if (!userData.firstname) {
+      tempErrors.firstname = 'First name is required';
       isValid = false;
     }
 
-    // Check if password length is at least 6 characters
-    if (formData.password && formData.password.length < 6) {
+    if (!userData.lastname) {
+      tempErrors.lastname = 'Last name is required';
+      isValid = false;
+    }
+
+    if (!/^\d{10}$/.test(userData.phonenumber)) {
+      tempErrors.phonenumber = 'Phone number must be 10 digits';
+      isValid = false;
+    }
+
+    if (!userData.email) {
+      tempErrors.email = 'Email is required';
+      isValid = false;
+    }
+
+    if (userData.password.length < 6) {
       tempErrors.password = 'Password must be at least 6 characters long';
+      isValid = false;
+    }
+
+    if (userData.password !== userData.confirmPass) {
+      tempErrors.confirmPass = 'Passwords do not match';
       isValid = false;
     }
 
@@ -69,21 +60,28 @@ const RegistrationForm = () => {
     return isValid;
   };
 
+  // Handle input field changes
+  const handleFieldChange = (event) => {
+    const { name, value } = event.target;
+    setUserDataLocal({
+      ...userData,
+      [name]: value
+    });
+  };
+
   // Handle form submission
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    if (!validate()) return;  // Return if validation fails
+  const handleSubmit = async (event) => {
+    event.preventDefault(); // Prevent the default form submission
+    if (!validate()) return; // Return if validation fails
 
     try {
-      // Send POST request to register the user
-      const response = await axios.post('/users/register', formData);
-      dispatch(setToken(response.data.token));  // Save token in Redux store
+      dispatch(setUserData(userData)); // Dispatch action to set user data in Redux store
       toast.success('Registration successful!');
       setTimeout(() => {
-        navigate('/login');  // Redirect to login page after a short delay
+        navigate('/login'); // Redirect to login page after a short delay
       }, 1000);
     } catch (error) {
-      toast.error('Error registering, please try again.');  // Handle errors
+      toast.error('Error registering, please try again.'); // Handle errors
     }
   };
 
@@ -93,96 +91,110 @@ const RegistrationForm = () => {
   };
 
   return (
-    <div className="container-fluid registration-background">
-      <div className="h-100 row align-items-center justify-content-center">
-        <div className="col-md-6">
-          <div className="card text-white bg-dark">
-            <div className="card-body">
-              <h3 className="card-title text-center mb-4">Register</h3>
-              <form onSubmit={handleSubmit}>
-                {/* Form Fields */}
-                <div className="form-group mb-3">
-                  <label>First Name</label>
-                  <input
-                    type="text"
-                    className="form-control"
-                    name="firstname"
-                    value={formData.firstname}
-                    onChange={handleChange}
-                    placeholder="Enter your first name"
-                    required
-                  />
-                  {errors.firstname && <div className="text-danger">{errors.firstname}</div>}
-                </div>
-                <div className="form-group mb-3">
-                  <label>Last Name</label>
-                  <input
-                    type="text"
-                    className="form-control"
-                    name="lastname"
-                    value={formData.lastname}
-                    onChange={handleChange}
-                    placeholder="Enter your last name"
-                    required
-                  />
-                  {errors.lastname && <div className="text-danger">{errors.lastname}</div>}
-                </div>
-                <div className="form-group mb-3">
-                  <label>Phone</label>
-                  <input
-                    type="text"
-                    className="form-control"
-                    name="phone"
-                    value={formData.phone}
-                    onChange={handleChange}
-                    placeholder="Enter your phone number"
-                    required
-                  />
-                  {errors.phone && <div className="text-danger">{errors.phone}</div>}
-                </div>
-                <div className="form-group mb-3">
-                  <label>Email</label>
-                  <input
-                    type="email"
-                    className="form-control"
-                    name="email"
-                    value={formData.email}
-                    onChange={handleChange}
-                    placeholder="Enter your email"
-                    required
-                  />
-                  {errors.email && <div className="text-danger">{errors.email}</div>}
-                </div>
-                <div className="form-group position-relative mb-3">
-                  <label>Password</label>
-                  <input
-                    className="form-control"
-                    name="password"
-                    value={formData.password}
-                    onChange={handleChange}
-                    placeholder="Enter your password"
-                    type={passwordVisible ? 'text' : 'password'}
-                    required
-                  />
-                  {errors.password && <div className="text-danger">{errors.password}</div>}
-                  <button
-                    type="button"
-                    className="btn position-absolute text-light"
-                    style={{ top: '50%', right: '5px', transform: 'translateY(-20%)' }}
-                    onClick={togglePasswordVisibility}
-                  >
-                    <FontAwesomeIcon icon={passwordVisible ? faEye : faEyeSlash} />
-                  </button>
-                </div>
-                <div className="d-grid mb-3">
-                  <button type="submit" className="btn btn-primary">Register</button>
-                </div>
-              </form>
-              <div className="text-center">
-                <Link to="/login" className="text-white">Already have an account? Login</Link>
-              </div>
+    <div className="min-h-screen bg-gradient-to-b from-blue-400 to-purple-500 flex items-center justify-center py-5">
+      <div className="bg-white p-8 rounded-lg shadow-lg max-w-md w-full">
+        <h2 className="text-2xl font-bold mb-6 text-center text-gray-700">Register</h2>
+        <form onSubmit={handleSubmit}>
+          <div className="mb-4">
+            <label className="block text-gray-700">First Name</label>
+            <input
+              type="text"
+              className="w-full p-2 mt-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+              placeholder="First Name"
+              value={userData.firstname}
+              onChange={handleFieldChange}
+              name="firstname"
+            />
+            {errors.firstname && <div className="text-red-500">{errors.firstname}</div>}
+          </div>
+          <div className="mb-4">
+            <label className="block text-gray-700">Last Name</label>
+            <input
+              type="text"
+              className="w-full p-2 mt-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+              placeholder="Last Name"
+              value={userData.lastname}
+              onChange={handleFieldChange}
+              name="lastname"
+            />
+            {errors.lastname && <div className="text-red-500">{errors.lastname}</div>}
+          </div>
+          <div className="mb-4">
+            <label className="block text-gray-700">Bio</label>
+            <textarea
+              className="w-full p-2 mt-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+              placeholder="Bio"
+              value={userData.bio}
+              onChange={handleFieldChange}
+              name="bio"
+            />
+          </div>
+          <div className="mb-4">
+            <label className="block text-gray-700">Email</label>
+            <input
+              type="email"
+              className="w-full p-2 mt-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+              value={userData.email}
+              onChange={handleFieldChange}
+              name="email"
+              placeholder="Email"
+            />
+            {errors.email && <div className="text-red-500">{errors.email}</div>}
+          </div>
+          <div className="mb-4">
+            <label className="block text-gray-700">Phone Number</label>
+            <input
+              type="tel"
+              className="w-full p-2 mt-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+              placeholder="Enter Phone Number"
+              value={userData.phonenumber}
+              onChange={handleFieldChange}
+              name="phonenumber"
+            />
+            {errors.phonenumber && <div className="text-red-500">{errors.phonenumber}</div>}
+          </div>
+          <div className="mb-4">
+            <label className="block text-gray-700">Password</label>
+            <div className="relative">
+              <input
+                type={passwordVisible ? 'text' : 'password'}
+                className="w-full p-2 mt-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                placeholder="Password"
+                value={userData.password}
+                onChange={handleFieldChange}
+                name="password"
+              />
+              {errors.password && <div className="text-red-500">{errors.password}</div>}
+              <button
+                type="button"
+                className="absolute inset-y-0 right-2 flex items-center"
+                onClick={togglePasswordVisibility}
+              >
+                {passwordVisible ? <FaEye /> : <FaEyeSlash />}
+              </button>
             </div>
           </div>
+          <div className="mb-6">
+            <label className="block text-gray-700">Confirm Password</label>
+            <input
+              type="password"
+              className="w-full p-2 mt-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+              placeholder="Confirm Password"
+              value={userData.confirmPass}
+              onChange={handleFieldChange}
+              name="confirmPass"
+            />
+            {errors.confirmPass && <div className="text-red-500">{errors.confirmPass}</div>}
+          </div>
+          <button
+            type="submit"
+            className="w-full bg-blue-500 text-white p-2 rounded hover:bg-blue-600 transition duration-300"
+          >
+            Register
+          </button>
+        </form>
+        <div className="mt-4 text-center">
+          <Link to="/login" className="text-blue-500 hover:underline">Already have an account? Login</Link>
         </div>
       </div>
       <ToastContainer
@@ -200,4 +212,4 @@ const RegistrationForm = () => {
   );
 };
 
-export default RegistrationForm;
+export default Register;
