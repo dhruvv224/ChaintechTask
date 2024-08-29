@@ -6,6 +6,7 @@ const Register = () => {
         lastname:'',
         email:'',
         bio:'',
+        phonenumber:'',
         password:'',
         confirmPass:''
 
@@ -32,7 +33,7 @@ const Register = () => {
           </div>
           <div className="mb-4">
             <label className="block text-gray-700">Last Name</label>
-            <input type="text" className="w-full p-2 mt-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"placeholder='Last Name' value={UserData.lastname} onChange={handleFieldChange} name='lasttname' />
+            <input type="text" className="w-full p-2 mt-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"placeholder='Last Name' value={UserData.lastname} onChange={handleFieldChange} name='lastname' />
           </div>
           <div className="mb-4">
             <label className="block text-gray-700">Bio</label>
@@ -40,11 +41,11 @@ const Register = () => {
           </div>
           <div className="mb-4">
             <label className="block text-gray-700">Email</label>
-            <input type="email" className="w-full p-2 mt-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500" />
+            <input type="email" className="w-full p-2 mt-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500" value={UserData.email} onChange={handleFieldChange} name='email' placeholder='Email'/>
           </div>
           <div className="mb-4">
             <label className="block text-gray-700">Phone Number</label>
-            <input type="tel" className="w-full p-2 mt-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder='Email' value={UserData.email} onChange={handleFieldChange} name='email'/>
+            <input type="tel" className="w-full p-2 mt-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder='Enter Phonenumber' value={UserData.phonenumber} onChange={handleFieldChange} name='phonenumber'/>
           </div>
           <div className="mb-4">
             <label className="block text-gray-700">Password</label>
