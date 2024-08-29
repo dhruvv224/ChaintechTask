@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { setUserData } from '../features/user/userSlice';
+// import { setUserData } from '../features/user/userSlice';
+import { setUserData } from '../Redux/Slices/UserSlice';
 
 const Register = () => {
     const [userData, setUserDataLocal] = useState({
