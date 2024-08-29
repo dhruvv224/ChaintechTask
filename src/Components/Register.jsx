@@ -28,15 +28,15 @@ const Register = () => {
         <form>
           <div className="mb-4">
             <label className="block text-gray-700">First Name</label>
-            <input type="text" className="w-full p-2 mt-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"  placeholder='First Name' value={UserData.firstname} onChange={handleFieldChange}/>
+            <input type="text" className="w-full p-2 mt-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"  placeholder='First Name' value={UserData.firstname} onChange={handleFieldChange} name='firstname'/>
           </div>
           <div className="mb-4">
             <label className="block text-gray-700">Last Name</label>
-            <input type="text" className="w-full p-2 mt-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"placeholder='Last Name' value={UserData.lastname} onChange={handleFieldChange} />
+            <input type="text" className="w-full p-2 mt-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"placeholder='Last Name' value={UserData.lastname} onChange={handleFieldChange} name='lasttname' />
           </div>
           <div className="mb-4">
             <label className="block text-gray-700">Bio</label>
-            <textarea className="w-full p-2 mt-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"placeholder='Bio Name' value={UserData.bio} onChange={handleFieldChange} />
+            <textarea className="w-full p-2 mt-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"placeholder='Bio Name' value={UserData.bio} onChange={handleFieldChange} name='bio' />
           </div>
           <div className="mb-4">
             <label className="block text-gray-700">Email</label>
@@ -44,15 +44,15 @@ const Register = () => {
           </div>
           <div className="mb-4">
             <label className="block text-gray-700">Phone Number</label>
-            <input type="tel" className="w-full p-2 mt-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder='Email' value={UserData.email} onChange={handleFieldChange}/>
+            <input type="tel" className="w-full p-2 mt-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder='Email' value={UserData.email} onChange={handleFieldChange} name='email'/>
           </div>
           <div className="mb-4">
             <label className="block text-gray-700">Password</label>
-            <input type="password" className="w-full p-2 mt-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder='Password' value={UserData.password} onChange={handleFieldChange}/>
+            <input type="password" className="w-full p-2 mt-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder='Password' value={UserData.password} onChange={handleFieldChange} name='passwowrd'/>
           </div>
           <div className="mb-6">
             <label className="block text-gray-700">Confirm Password</label>
-            <input type="password" className="w-full p-2 mt-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"placeholder='Confirm Password' value={UserData.confirmPass} onChange={handleFieldChange} />
+            <input type="password" className="w-full p-2 mt-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"placeholder='Confirm Password' value={UserData.confirmPass} onChange={handleFieldChange} name='confirmpass' />
           </div>
           <button className="w-full bg-blue-500 text-white p-2 rounded hover:bg-blue-600 transition duration-300">
             Register
