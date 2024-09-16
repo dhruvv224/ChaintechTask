@@ -18,13 +18,18 @@ const Api = () => {
         {
             data.map((item,index)=>(
                 <>
-                <div key={index}>
+                
+<div className='grid grid-cols-3 gap-4 '>
+<div key={index}>
                     {
                         item.title
                     }
-                    <img src={item.category.image} alt='image' className='w-full h-full object-cover'/>
-
+<img src={item.category.image} alt='image' className='w-full h-full object-cover'/>
+</div>
                 </div>
+
+
+
                 </>
             ))
         }
