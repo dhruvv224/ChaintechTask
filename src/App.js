@@ -6,7 +6,10 @@ import Register from './Components/Register';
 import Login from './Components/Login';
 import UserPage from './Components/UserPage';
 import Api from './Api/Api';
+import Memo from './Memo/Memo';
+import MemoExample from './Memo/FilterMemo';
 function App() {
+  const staticData="this will render"
   return (
     <div>
       <Routes>
@@ -15,6 +18,10 @@ function App() {
         <Route path='/login' element={<Login/>}/>
         <Route path='/user' element={<UserPage/>}/>
         <Route path='/Api' element={<Api/>}/>
+        <Route path='/memo' element={<Memo />}/>
+        <Route path='/filtermemo' element={<MemoExample />}/>
+
+
 
 
 
