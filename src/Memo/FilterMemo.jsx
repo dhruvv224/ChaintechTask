@@ -16,12 +16,11 @@ const MemoExample = () => {
     console.log('Filtering items...');
     return items.filter(item => item.toLowerCase().includes(searchTerm.toLowerCase()));
   }, [searchTerm,items]);
-  
+
 console.log(count)
   return (
     <div className='max-w-7xl mx-auto mt-5'>
       <h1 className='text-[38px] font-bold'>useMemo Example</h1>
-
       {/* Input field to update search term */}
       <input
         type="text"
