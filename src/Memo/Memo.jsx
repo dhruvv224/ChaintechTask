@@ -1,7 +1,10 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useMemo, useContext } from 'react';
+import { UseContext } from '../ContextApi/UseContext';
 
 const Memo = ({ staticData }) => {
     const [count, setCount] = useState(0);
+    const{data}=useContext(UseContext)
+    console.log("data is>>>>>>>>>>",data)
     
     useEffect(() => {
         console.log('Received staticData:', staticData);  // Debugging

@@ -1,16 +1,16 @@
 import { useContext,createContext,useState } from "react";
-const useContext=createContext()
-const Provider=({children})=>{
+const UseContext=createContext()
+const DataProvider=({children})=>{
     const [data,setData]=useState([])
 
     return(
         <>
-        <useContext.Provider value={{data,setData}}>
+        <UseContext.Provider value={{data,setData}}>
             {children}
 
-        </useContext.Provider>
+        </UseContext.Provider>
         </>
     )
 
 }
-export  {useContext,Provider}
+export  {UseContext,DataProvider}

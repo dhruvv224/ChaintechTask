@@ -7,12 +7,17 @@ import Login from './Components/Login';
 import UserPage from './Components/UserPage';
 import Api from './Api/Api';
 import Memo from './Memo/Memo';
+import { DataProvider } from './ContextApi/UseContext';
 import MemoExample from './Memo/FilterMemo';
 function App() {
   const staticData="this will render"
   return (
     <div>
+      <DataProvider>
+
+      
       <Routes>
+
         <Route path='/' element={<WelcomePage/>}/>
         <Route path='/register' element={<Register/>}/>
         <Route path='/login' element={<Login/>}/>
@@ -27,6 +32,7 @@ function App() {
 
 
       </Routes>
+      </DataProvider>
     </div>
   );
 }

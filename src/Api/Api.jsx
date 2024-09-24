@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import Memo from '../Memo/Memo';
+import { UseContext } from '../ContextApi/UseContext';
+import { useContext } from 'react';
 
 const Api = () => {
-    const [data, setData] = useState([]);
+const {data,setData}=useContext(UseContext)
 
     const fetchData = async () => {
         try {
@@ -31,7 +33,6 @@ const Api = () => {
                 ))}
             </div>
             
-            <Memo staticData={staticData} />
         </div>
     );
 };
