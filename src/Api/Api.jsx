@@ -4,15 +4,20 @@ import Memo from '../Memo/Memo';
 import { UseContext } from '../ContextApi/UseContext';
 import { useContext } from 'react';
 import { Link } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { setApiData } from '../Redux/Slices/UserSlice';
 
 const Api = () => {
 const {data,setData}=useContext(UseContext)
 console.log(data)
 console.log("asdjasbdusjdaku")
+const dispatch=useDispatch()
+
     const fetchData = async () => {
         try {
             const response = await axios.get("https://api.escuelajs.co/api/v1/products");
             setData(response.data);
+            dispatch(setApiData(response.data))
         } catch (error) {
             console.error('Error fetching data:', error);
         }

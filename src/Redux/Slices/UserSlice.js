@@ -1,23 +1,35 @@
 // src/features/user/userSlice.js
 import { createSlice } from '@reduxjs/toolkit';
 
-const initialState = {};
+const initialState = {
+  Apidata: {}, // Define Apidata here as an empty object
+  userData: {} // Optionally add userData to handle other user information
+};
 
 const UserSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {
     setUserData: (state, action) => {
-      return action.payload; // Set the state to the passed object
+      state.userData = action.payload; // Update userData with new information
     },
     updateUserData: (state, action) => {
-      return { ...state, ...action.payload }; // Merge the existing state with new data
+      state.userData = { ...state.userData, ...action.payload }; // Merge existing userData with new data
     },
-    clearUserData: () => {
-      return {}; // Reset the state to an empty object
+    clearUserData: (state) => {
+      state.userData = {}; // Clear userData, leave Apidata untouched
     },
+    setApiData: (state, action) => {
+      state.Apidata = action.payload; // Update only Apidata field with new data
+    },
+    clearApiData: (state) => {
+      state.Apidata = {}; // Reset Apidata to an empty object
+    }
   },
 });
 
-export const { setUserData, updateUserData, clearUserData } = UserSlice.actions;
+// Export the actions
+export const { setUserData, updateUserData, clearUserData, setApiData, clearApiData } = UserSlice.actions;
+
+// Export the reducer
 export default UserSlice.reducer;
