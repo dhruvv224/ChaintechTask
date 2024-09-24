@@ -3,10 +3,12 @@ import axios from 'axios';
 import Memo from '../Memo/Memo';
 import { UseContext } from '../ContextApi/UseContext';
 import { useContext } from 'react';
+import { Link } from 'react-router-dom';
 
 const Api = () => {
 const {data,setData}=useContext(UseContext)
-
+console.log(data)
+console.log("asdjasbdusjdaku")
     const fetchData = async () => {
         try {
             const response = await axios.get("https://api.escuelajs.co/api/v1/products");
@@ -32,7 +34,9 @@ const {data,setData}=useContext(UseContext)
                     </div>
                 ))}
             </div>
-            
+            <Link to='/memo'>
+            child component
+            </Link>
         </div>
     );
 };

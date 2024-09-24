@@ -19,6 +19,7 @@ const Memo = ({ staticData }) => {
             <h1 className='text-[38px] font-bold'>
                 {count}
             </h1>
+          =
             <button className='bg-yellow-400 p-4 rounded-md text-[20px]' onClick={()=>setCount(count+1)}>Click me </button>
         </div>
     );
