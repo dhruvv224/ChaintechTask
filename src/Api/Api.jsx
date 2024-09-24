@@ -30,6 +30,7 @@ const Api = () => {
                     </div>
                 ))}
             </div>
+            
             <Memo staticData={staticData} />
         </div>
     );

@@ -18,6 +18,7 @@ const MemoExample = () => {
   }, [searchTerm,items]);
 
 console.log(count)
+
   return (
     <div className='max-w-7xl mx-auto mt-5'>
       <h1 className='text-[38px] font-bold'>useMemo Example</h1>
