@@ -9,6 +9,7 @@ import Api from './Api/Api';
 import Memo from './Memo/Memo';
 import { DataProvider } from './ContextApi/UseContext';
 import MemoExample from './Memo/FilterMemo';
+import Formex from './Components/Formex';
 function App() {
   const staticData="this will render"
   return (
@@ -25,6 +26,8 @@ function App() {
         <Route path='/Api' element={<Api/>}/>
         <Route path='/memo' element={<Memo />}/>
         <Route path='/filtermemo' element={<MemoExample />}/>
+
+        <Route path='/form' element={<Formex />}/>
 
 
 
