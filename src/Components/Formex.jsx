@@ -51,7 +51,7 @@ const handlesubmit=(e)=>{
                 <input type='password' value={FormData.confirmPasss} onChange={''} name='confirmPass'/>
 
             </div>
-<button className='btn-su' type='submit'>Submit</button>
+<button className='btn-s' type='submit'>Submit</button>
 
         </form>
         </div>
